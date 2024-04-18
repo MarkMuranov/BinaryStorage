@@ -28,7 +28,7 @@ bool BlockIO::readBlock(Block &block, size_t blockIndex) {
 }
 
 bool BlockIO::writeBlock(Block &block, size_t blockIndex) {
-    if (blockIndex >= getBlockCount())
+    if (blockIndex > getBlockCount())
         return false;
 
     stream.clear();

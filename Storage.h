@@ -10,11 +10,12 @@
 #include <vector>
 #include <array>
 
-class BinaryIterator;
+class BinaryBuffer;
 
 class Storable {
-    virtual void store(BinaryIterator& output) = 0;
-    virtual void load (BinaryIterator& input)  = 0;
+public:
+    virtual void store(BinaryBuffer& output) = 0;
+    virtual void load (BinaryBuffer& input)  = 0;
 };
 
 class Storage {
@@ -25,15 +26,18 @@ public:
     bool open(const std::string& filepath);
     bool create(const std::string& filepath);
 
+    void store(Storable& storable);
+    void load(Storable& storable);
+
 private:
     BlockIO blockIO;
 
 };
 
 
-class BinaryIterator {
+class BinaryBuffer {
 public:
-    BinaryIterator() = default;
+    BinaryBuffer() = default;
 
     template<typename T>
     bool write(const T& data) {
@@ -43,6 +47,14 @@ public:
         for (size_t i = 0; i < dataSize; ++i)
             buffer.push_back(binaryData[i]);
 
+        return true;
+    }
+
+    bool writeString(const std::string& data) {
+        for (auto character : data)
+            buffer.push_back(character);
+
+        buffer.push_back('\0');
         return true;
     }
 
@@ -59,7 +71,15 @@ public:
         return data;
     }
 
+    std::string readString() {
+        std::string data(buffer.data() + readPointer);
+
+        readPointer += data.size() + 1;
+        return data;
+    }
+
     size_t getSize() { return buffer.size(); }
+    std::vector<char>& getBuffer() { return buffer; };
 
 private:
     std::vector<char> buffer;

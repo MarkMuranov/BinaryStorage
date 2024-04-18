@@ -6,7 +6,7 @@
 
 #include <fstream>
 
-enum class BlockType {
+enum class BlockType : char {
     freeBlock, schemaBlock, dataBlock, tocBlock
 };
 

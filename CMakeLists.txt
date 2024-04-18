@@ -8,4 +8,5 @@ add_executable(BinaryStorage main.cpp
         Storage.h
         BlockIO.cpp
         BlockIO.h
+        Schema.h
 )
