@@ -17,13 +17,13 @@ public:
         output.write(1337);
     }
     void load(BinaryBuffer& input) override {
-        auto test1 = input.read<int>();
-        auto test2 = input.read<char>();
-        auto test3 = input.read<float>();
-        auto test4 = input.read<bool>();
-        auto test5 = input.readString();
-        auto test6 = input.read<int>();
-        std::cout << "test\n";
+        std::cout << "Schema load: "
+            << input.read<int>() << ", "
+            << input.read<char>() << ", "
+            << input.read<float>() << ", "
+            << input.read<bool>() << ", "
+            << input.readString() << ", "
+            << input.read<int>() << "\n";
     }
 
 };

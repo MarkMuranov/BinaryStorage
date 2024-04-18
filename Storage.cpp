@@ -3,6 +3,7 @@
 //
 
 #include "Storage.h"
+#include <cstring>
 
 constexpr std::ios::openmode commonOpenMode =  std::ios::binary | std::ios::in | std::ios::out;
 
